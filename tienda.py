@@ -44,7 +44,6 @@ class SistemaProductos:
 
     def registrar_producto(self):
         """Registra un nuevo producto en el archivo."""
-        # Viola SRP: Mezcla la entrada/salida con lógica de negocio
         print("\n--- REGISTRO DE PRODUCTO ---")
 
         id = input("ID del producto: ")
@@ -53,7 +52,6 @@ class SistemaProductos:
         categoria = input("Categoría del producto: ")
         stock = int(input("Stock del producto: "))
 
-        # Viola SRP: Maneja directamente la persistencia
         productos = self.cargar_productos()
 
         # Verificar si el producto ya existe
@@ -137,7 +135,6 @@ class SistemaProductos:
 
     def registrar_venta(self):
         """Registra una venta de producto."""
-        # Viola SRP: Mezcla lógica de ventas con productos
         print("\n--- REGISTRO DE VENTA ---")
 
         producto_id = input("ID del producto vendido: ")
@@ -176,7 +173,6 @@ class SistemaProductos:
 
     def generar_reporte(self):
         """Genera un reporte de ventas."""
-        # Viola SRP: Mezcla lógica de reportes con el sistema de productos
         print("\n--- REPORTE DE VENTAS ---")
         ventas = self.cargar_ventas()
 
@@ -195,7 +191,6 @@ class SistemaProductos:
         print("-" * 55)
         print(f"TOTAL VENTAS: ${total_ventas:.2f}")
 
-    # Viola OCP y SRP: Métodos de persistencia mezclados con lógica de negocio
     def cargar_productos(self):
         """Carga los productos desde el archivo."""
         if not os.path.exists(self.archivo_productos):
@@ -231,7 +226,6 @@ class SistemaProductos:
             json.dump(ventas, archivo, indent=4)
 
 
-# Viola LSP: Clase derivada que no es sustituible por la clase base
 class ProductoEspecial:
     """
     Clase que representa un tipo especial de producto pero no puede
@@ -245,17 +239,14 @@ class ProductoEspecial:
         self.stock = stock
         self.descuento = descuento
 
-    # Viola LSP: Comportamiento incompatible con la clase base
     def calcular_precio_final(self):
         # Los productos especiales calculan su precio diferente
         return self.precio * (1 - self.descuento)
 
-    # Viola LSP: Método que no existe en la clase base
     def aplicar_descuento(self, porcentaje):
         self.descuento = porcentaje
 
 
-# Punto de entrada del programa
 if __name__ == "__main__":
     sistema = SistemaProductos()
     sistema.ejecutar()
